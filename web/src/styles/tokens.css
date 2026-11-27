@@ -1,0 +1,211 @@
+/*
+ * Fresh Choice design tokens.
+ * Light: 60% warm neutral surfaces, 30% coral #ED7F6E, 10% deep teal accent.
+ * Dark:  60% deep blue-green surfaces (never pure black), 30% teal #1d6870, 10% soft coral accent.
+ * Status colours always come with an icon and a label; colour is never the only signal.
+ */
+:root {
+  color-scheme: light;
+  --font: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* 60: neutral foundation */
+  --bg: #fbf8f5;
+  --surface: #ffffff;
+  --surface-2: #f6f1ec;
+  --surface-3: #efe7e0;
+  --border: #e9e0d8;
+  --border-strong: #d9ccc1;
+  --text: #2a211d;
+  --text-2: #5c514b;
+  --text-3: #74685f;
+
+  /* 30: coral */
+  --primary: #ed7f6e;
+  --primary-hover: #e86e5b;
+  --primary-press: #dd604c;
+  --primary-soft: #fce8e4;
+  --primary-softer: #fdf3f1;
+  --on-primary: #2b1511;
+  --primary-ink: #a63f2d;
+
+  /* 10: teal accent */
+  --accent: #1d6870;
+  --accent-hover: #175a61;
+  --accent-soft: #dcedee;
+  --on-accent: #ffffff;
+  --accent-ink: #1d6870;
+
+  --focus: #1d6870;
+
+  /* Logo (brand/fresh-choice-logo): coral fruit, teal leaf, deep blue-green wordmark */
+  --logo-fruit: #ed7f6e;
+  --logo-leaf: #1d6870;
+  --logo-word: #123b40;
+
+  /* Status (with matching icons in the UI) */
+  --blue: #2f6fdb;
+  --blue-soft: #e4edfc;
+  --blue-ink: #1d4c9f;
+  --red: #cf3e3e;
+  --red-soft: #fbe5e5;
+  --red-ink: #9f2c2c;
+  --green: #22845a;
+  --green-soft: #dff3e9;
+  --green-ink: #1d6e4b;
+  --yellow: #e8b32a;
+  --yellow-soft: #fcf3d8;
+  --yellow-ink: #6d5000;
+  --purple: #7a5ad8;
+  --purple-soft: #ede7fb;
+  --purple-ink: #5336ad;
+  --amber-ink: #8a4d00;
+  --amber-soft: #fdf0dc;
+
+  /* Skill palette (8 calm hues) */
+  --skill-0: #ed7f6e;
+  --skill-1: #1d8a92;
+  --skill-2: #c99a2e;
+  --skill-3: #7a5ad8;
+  --skill-4: #3f8f4f;
+  --skill-5: #d0628f;
+  --skill-6: #4b77c9;
+  --skill-7: #8b6b55;
+
+  --r-xs: 8px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  --shadow-1: 0 1px 2px rgb(42 33 29 / 0.05);
+  --shadow-2: 0 1px 2px rgb(42 33 29 / 0.04), 0 6px 18px rgb(42 33 29 / 0.06);
+  --shadow-3: 0 2px 6px rgb(42 33 29 / 0.06), 0 18px 44px rgb(42 33 29 / 0.14);
+  --scrim: rgb(42 33 29 / 0.32);
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-fast: 140ms;
+  --t-med: 240ms;
+
+  --nav-h: 64px;
+  --rail-w: 76px;
+  --rail-w-open: 232px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #111a1c;
+    --surface: #172226;
+    --surface-2: #1c292d;
+    --surface-3: #233337;
+    --border: #2a3a3f;
+    --border-strong: #3a4e54;
+    --text: #e8eeee;
+    --text-2: #b3c1c2;
+    --text-3: #94a4a6;
+    --primary: #1d6870;
+    --primary-hover: #237982;
+    --primary-press: #2a8791;
+    --primary-soft: #173a3e;
+    --primary-softer: #152e31;
+    --on-primary: #ffffff;
+    --primary-ink: #84cdd3;
+    --accent: #f09482;
+    --accent-hover: #f4a797;
+    --accent-soft: #3a2723;
+    --on-accent: #2b1511;
+    --accent-ink: #f4a797;
+    --logo-fruit: #ed7f6e;
+    --logo-leaf: #fbf8f5;
+    --logo-word: #fbf8f5;
+    --focus: #f09482;
+    --blue: #74a2ee;
+    --blue-soft: #1c2b45;
+    --blue-ink: #a9c6f5;
+    --red: #ee7c7c;
+    --red-soft: #3b2023;
+    --red-ink: #f6abab;
+    --green: #5fc897;
+    --green-soft: #17352a;
+    --green-ink: #94dcb8;
+    --yellow: #ecc55e;
+    --yellow-soft: #372e15;
+    --yellow-ink: #f2d690;
+    --purple: #a88dec;
+    --purple-soft: #2b2541;
+    --purple-ink: #c9b8f5;
+    --amber-ink: #f3c27f;
+    --amber-soft: #3a2c17;
+    --skill-0: #f09482;
+    --skill-1: #4fb3ba;
+    --skill-2: #e0b75a;
+    --skill-3: #a88dec;
+    --skill-4: #6fbf7f;
+    --skill-5: #e58bb1;
+    --skill-6: #7fa3e6;
+    --skill-7: #c0a18a;
+    --shadow-1: 0 1px 2px rgb(0 0 0 / 0.3);
+    --shadow-2: 0 1px 2px rgb(0 0 0 / 0.25), 0 8px 22px rgb(0 0 0 / 0.28);
+    --shadow-3: 0 2px 8px rgb(0 0 0 / 0.35), 0 22px 50px rgb(0 0 0 / 0.45);
+    --scrim: rgb(4 10 12 / 0.6);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #111a1c;
+  --surface: #172226;
+  --surface-2: #1c292d;
+  --surface-3: #233337;
+  --border: #2a3a3f;
+  --border-strong: #3a4e54;
+  --text: #e8eeee;
+  --text-2: #b3c1c2;
+  --text-3: #94a4a6;
+  --primary: #1d6870;
+  --primary-hover: #237982;
+  --primary-press: #2a8791;
+  --primary-soft: #173a3e;
+  --primary-softer: #152e31;
+  --on-primary: #ffffff;
+  --primary-ink: #84cdd3;
+  --accent: #f09482;
+  --accent-hover: #f4a797;
+  --accent-soft: #3a2723;
+  --on-accent: #2b1511;
+  --accent-ink: #f4a797;
+  --logo-fruit: #ed7f6e;
+  --logo-leaf: #fbf8f5;
+  --logo-word: #fbf8f5;
+  --focus: #f09482;
+  --blue: #74a2ee;
+  --blue-soft: #1c2b45;
+  --blue-ink: #a9c6f5;
+  --red: #ee7c7c;
+  --red-soft: #3b2023;
+  --red-ink: #f6abab;
+  --green: #5fc897;
+  --green-soft: #17352a;
+  --green-ink: #94dcb8;
+  --yellow: #ecc55e;
+  --yellow-soft: #372e15;
+  --yellow-ink: #f2d690;
+  --purple: #a88dec;
+  --purple-soft: #2b2541;
+  --purple-ink: #c9b8f5;
+  --amber-ink: #f3c27f;
+  --amber-soft: #3a2c17;
+  --skill-0: #f09482;
+  --skill-1: #4fb3ba;
+  --skill-2: #e0b75a;
+  --skill-3: #a88dec;
+  --skill-4: #6fbf7f;
+  --skill-5: #e58bb1;
+  --skill-6: #7fa3e6;
+  --skill-7: #c0a18a;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-2: 0 1px 2px rgb(0 0 0 / 0.25), 0 8px 22px rgb(0 0 0 / 0.28);
+  --shadow-3: 0 2px 8px rgb(0 0 0 / 0.35), 0 22px 50px rgb(0 0 0 / 0.45);
+  --scrim: rgb(4 10 12 / 0.6);
+}
