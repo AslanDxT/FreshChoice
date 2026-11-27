@@ -1,0 +1,135 @@
+/*
+ * Manager screens: schedule grid, month and day views, issues, candidates, the availability
+ * matrix and the staffing-requirements grid. Uses the tokens from tokens.css and the shared
+ * classes from app.css; loaded after app.css (see main.tsx).
+ */
+
+/* =============================================================== schedule */
+.week-grid-wrap { overflow: auto; border-radius: var(--r-lg); border: 1px solid var(--border); background: var(--surface); max-height: calc(100dvh - 210px); position: relative; }
+.week-grid { display: grid; grid-template-columns: 112px repeat(4, minmax(var(--cell-min, 300px), 1fr)); min-width: max-content; }
+.wg-corner, .wg-head { position: sticky; top: 0; z-index: 3; background: var(--surface-2); border-bottom: 1px solid var(--border); padding: 12px 14px; font-weight: 650; font-size: 13.5px; }
+.wg-corner { left: 0; z-index: 4; }
+.wg-head { display: flex; align-items: center; gap: 8px; color: var(--text-2); }
+.wg-head strong { color: var(--text); font-size: 14.5px; }
+.wg-day { position: sticky; left: 0; z-index: 2; background: var(--surface); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 14px; display: flex; flex-direction: column; gap: 2px; }
+.wg-day .dname { font-weight: 700; }
+.wg-day .ddate { color: var(--text-3); font-size: 13px; }
+.wg-day.today { background: var(--primary-softer); }
+.wg-day.today .dname::after { content: 'Today'; margin-left: 6px; font-size: 11px; font-weight: 700; color: var(--primary-ink); background: var(--primary-soft); padding: 1px 7px; border-radius: 99px; vertical-align: 2px; }
+.wg-cell { border-bottom: 1px solid var(--border); border-left: 1px solid var(--border); padding: 10px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.wg-cell.short { background: color-mix(in srgb, var(--amber-soft) 60%, transparent); }
+.wg-cell.highlight { box-shadow: inset 0 0 0 2.5px var(--focus); }
+.cell-meta { display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; }
+.cover-meter { display: inline-flex; align-items: center; gap: 6px; font-weight: 650; font-size: 13px; }
+.cover-meter.ok { color: var(--green-ink); }
+.cover-meter.bad { color: var(--amber-ink); }
+.pairs { display: grid; grid-template-rows: repeat(2, auto); grid-auto-flow: column; grid-auto-columns: minmax(106px, 1fr); gap: 6px 6px; }
+.emp-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 52px;
+  padding: 7px 9px 7px 11px;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+  overflow: hidden;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast);
+}
+.emp-card::before { content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 3.5px; border-radius: 0 3px 3px 0; background: var(--skill-color, var(--border-strong)); }
+.emp-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-2); }
+.emp-card .nm { font-weight: 650; font-size: 13.5px; line-height: 1.25; }
+.emp-card .meta { display: flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--text-2); min-width: 0; }
+.emp-card .flags { position: absolute; right: 6px; top: 6px; display: flex; gap: 2px; color: var(--text-3); }
+.emp-card.sick { background: var(--yellow-soft); border-style: dashed; }
+.emp-card.sick .nm { text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.emp-card.replaced { opacity: 0.55; border-style: dashed; }
+.emp-card.covering { border-color: var(--purple); }
+.seat-open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 52px;
+  border-radius: var(--r-sm);
+  border: 1.5px dashed var(--border-strong);
+  color: var(--text-3);
+  background: transparent;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.seat-open:hover { border-color: var(--primary); color: var(--primary-ink); background: var(--primary-softer); }
+.seat-open.missing { border-color: color-mix(in srgb, var(--amber-ink) 55%, transparent); color: var(--amber-ink); }
+.skill-cov { display: flex; flex-wrap: wrap; gap: 4px; }
+.breaks-line { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 12.5px; color: var(--text-2); }
+
+/* month view */
+.month-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.month-dow { font-size: 12.5px; font-weight: 650; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; padding: 0 6px; }
+.month-day { min-height: 128px; padding: 10px; border-radius: var(--r-md); border: 1px solid var(--border); background: var(--surface); text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
+.month-day:hover { border-color: var(--border-strong); box-shadow: var(--shadow-2); }
+.month-day.other { opacity: 0.45; }
+.month-day.today { border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+.month-day .d { font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+.mini-bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: auto; }
+.mini-bar { height: 30px; border-radius: 7px; background: var(--surface-2); display: grid; place-items: center; font-size: 11.5px; font-weight: 700; color: var(--text-2); position: relative; overflow: hidden; }
+.mini-bar.ok { background: var(--green-soft); color: var(--green-ink); }
+.mini-bar.short { background: var(--amber-soft); color: var(--amber-ink); }
+.mini-bar.none { background: var(--surface-2); color: var(--text-3); }
+@media (max-width: 900px) {
+  .month-grid { grid-template-columns: repeat(7, minmax(42px, 1fr)); gap: 4px; }
+  .month-day { min-height: 76px; padding: 6px; }
+  .mini-bars { grid-template-columns: repeat(2, 1fr); gap: 2px; }
+  .mini-bar { height: 14px; font-size: 0; }
+  .month-day .tags { display: none; }
+}
+
+/* day view */
+.day-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 14px; }
+.day-col .emp-row { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--r-md); background: var(--surface-2); }
+.day-col .emp-row + .emp-row { margin-top: 6px; }
+
+/* mobile schedule: stacked days */
+@media (max-width: 760px) {
+  .week-grid-wrap.mobile-stack { display: none; }
+}
+.mobile-week { display: none; }
+@media (max-width: 760px) {
+  .mobile-week { display: flex; flex-direction: column; gap: 12px; }
+  .mobile-week details { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); }
+  .mobile-week summary { list-style: none; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 650; }
+  .mobile-week summary::-webkit-details-marker { display: none; }
+  .mobile-week .m-shift { border-top: 1px solid var(--border); padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .mobile-week .pairs { grid-auto-columns: minmax(130px, 1fr); overflow-x: auto; padding-bottom: 4px; }
+}
+
+/* issues panel */
+.issue { display: flex; gap: 12px; padding: 12px 14px; border-radius: var(--r-md); background: var(--surface-2); align-items: flex-start; }
+.issue + .issue { margin-top: 8px; }
+.issue.error { background: var(--red-soft); }
+.issue.warning { background: var(--amber-soft); }
+.issue.info { background: var(--blue-soft); }
+.issue button.linkish { border: 0; background: none; padding: 0; color: inherit; text-align: left; cursor: pointer; }
+
+/* candidates */
+.cand { display: flex; align-items: flex-start; gap: 12px; padding: 12px; border-radius: var(--r-md); border: 1px solid var(--border); }
+.cand + .cand { margin-top: 8px; }
+.cand.no { background: var(--surface-2); opacity: 0.85; }
+.cand .reasons { font-size: 13px; color: var(--text-2); margin: 4px 0 0; padding-left: 18px; }
+
+/* manager availability matrix */
+.mx { display: grid; grid-template-columns: repeat(7, auto); gap: 3px; }
+.mx-day { display: grid; grid-template-columns: repeat(4, 13px); gap: 2px; }
+.mx-dot { width: 13px; height: 13px; border-radius: 4px; background: var(--surface-3); display: grid; place-items: center; }
+.mx-dot.available { background: var(--blue); }
+.mx-dot.unavailable { background: var(--red); }
+.mx-dot.assigned { background: var(--green); }
+
+/* staffing requirements grid (Branches) */
+.req-grid { display: grid; grid-template-columns: 70px repeat(4, minmax(64px, 1fr)); gap: 6px; align-items: center; }
+.req-grid .input { text-align: center; padding: 6px; min-height: 38px; }
